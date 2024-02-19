@@ -1,5 +1,6 @@
 // http://localhost:7001/users/api/mock/2
 const express = require('express');
+var cors = require('cors')
 const http = require('http');
 const bodyParser = require("body-parser");
 // node simple
@@ -8,6 +9,22 @@ const bodyParser = require("body-parser");
 // });
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
+
+const allowedOrigins = ['localhost', '15.207.254.188'];
+app.use(cors({
+  origin: function(origin, callback){
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.includes(origin)) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+
+}));
 
 app.use((req, res, next)=>{
   console.log("first");
