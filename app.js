@@ -8,7 +8,9 @@ const bodyParser = require("body-parser");
 
 // });
 const app = express();
-app.use(bodyParser.urlencoded({extended: false}));
+//app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json({extended: false}));
+//app.use(express.urlencoded({extended: false}));
 
 const allowedOrigins = ['localhost', '15.207.254.188'];
 app.use(cors({
@@ -27,24 +29,30 @@ app.use(cors({
 }));
 
 app.use((req, res, next)=>{
-  console.log("first");
   next();
+  console.log("first");
+  
 });
 
 app.use((req, res, next)=>{
-  console.log("second");
   next();
 });
+
+app.use('/avinash',(req, res, next)=>{
+  // console.log(req.body);
+  res.send("<h1>this is avinash  page</h1>");
+  // res.redirect('/')
+})
 
 const adminRoutes = require('./routes/admin');
 app.use('/users', adminRoutes);
 
 app.use('/kav',(req, res, next)=>{
-  console.log(req.body);
+  // console.log(req.body);
   res.send("this is kav page");
-  res.redirect('/')
+  // res.redirect('/')
 })
-app.use('/',(req, res, next)=>{
+app.use('/index',(req, res, next)=>{
   res.send("this is home page");
 })
 
@@ -53,5 +61,5 @@ app.use((req, res)=>{
 })
 
 app.listen(7001, ()=>{
-  console.log("listen port")
+  //console.log("listen port")
 })
