@@ -29,12 +29,14 @@ app.use(cors({
 }));
 
 app.use((req, res, next)=>{
-  next();
   console.log("first");
+  res.locals.city="noida";
+  next();
   
 });
 
 app.use((req, res, next)=>{
+  console.log(res.locals.city, "city")
   next();
 });
 
